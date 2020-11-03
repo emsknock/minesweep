@@ -1,4 +1,5 @@
 /laskarit/viikko2/Unicafe/target
+.DS_Store
 
 # Compiled class file
 *.class
