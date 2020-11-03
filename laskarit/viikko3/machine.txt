@@ -1,0 +1,15 @@
+Main->Machine: new Machine()
+
+Machine->FuelTank: new FuelTank()
+Machine->FuelTank: fill(40)
+
+Machine->Engine: new Engine(tank)
+
+Main->Machine: drive()
+
+Machine->Engine: start()
+Engine->FuelTank: consume(5)
+Machine->Engine: isRunning()
+Engine->FuelTank: contentsLeft()
+Machine->Engine: useEnergy()
+Engine->FuelTank: consume(10)

@@ -1,0 +1,36 @@
+Main->*laitehallinto: new HKLLaitehallinto()
+laitehallinto->*lataajat: new ArrayList()
+laitehallinto->*lukijat: new ArrayList()
+
+Main->*rautatietori: new Lataajalaite()
+
+Main->*ratikka6: new Lukijalaite()
+Main->*bussi244: new Lukijalaite()
+
+Main->+laitehallinto: lisaaLataaja(rautatietori)
+laitehallinto->-lataajat: add(lataaja)
+
+Main->+laitehallinto: lisaaLukija(ratikka6)
+laitehallinto->-lukijat: add(lukija)
+Main->+laitehallinto: lisaaLukija(bussi244)
+laitehallinto->-lukijat: add(lukija)
+
+Main->*lippuluukku: new Kioski()
+
+Main->+lippuluukku: ostaMatkakortti("Arto")
+lippuluukku->*uusikortti: new Matkakortti(nimi)
+lippuluukku-->-Main: Matkakortti
+
+Main->+rautatietori: lataaArvoa(artonKortti, 3)
+rautatietori->-uusikortti: kasvataArvoa(3)
+
+Main->+ratikka6: ostaLippu(artonKortti, 0)
+ratikka6->+uusikortti: k.getArvo()
+uusikortti-->-ratikka6: 3
+ratikka6->uusikortti: k.vahennaArvoa(1.5)
+ratikka6-->-Main: true
+
+Main->+bussi244: ostaLippu(artonKortti, 2)
+bussi244->+uusikortti: k.getArvo()
+uusikortti-->-bussi244: 1.5
+bussi244-->-Main: false
