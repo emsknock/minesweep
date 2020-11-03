@@ -94,6 +94,7 @@ public class KassapaateTest {
     @Test
     public void kortinLatausMuuttaaArvojaOikein() {
         k.lataaRahaaKortille(m, 1);
+        k.lataaRahaaKortille(m, -1);
         assertTrue(k.kassassaRahaa() == 100001);
         assertTrue(m.saldo() == 1001);
     }
