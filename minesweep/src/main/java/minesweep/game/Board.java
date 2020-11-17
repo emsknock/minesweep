@@ -41,4 +41,8 @@ public class Board {
 
     }
 
+    private Square[][] getGrid() {
+        return this.grid;
+    }
+
 }
