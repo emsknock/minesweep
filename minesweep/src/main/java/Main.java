@@ -8,6 +8,9 @@
  *
  * @author Emma Koskinen
  */
+
+package minesweep;
+
 public class Main {
 
     /**
