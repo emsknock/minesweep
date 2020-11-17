@@ -18,9 +18,11 @@ public class Board {
         this.GRID_W = width;
 
         this.grid = new Square[height][width];
-        for (Square[] row : this.grid) {
-            row = new Square[width];
-            for (Square col : row) col = new Square();
+        for (int rowIdx = 0; rowIdx < height; rowIdx++) {
+            this.grid[rowIdx] = new Square[width];
+            for (int colIdx = 0; colIdx < width; colIdx++) {
+                this.grid[rowIdx][colIdx] = new Square();
+            }
         }
 
         int placedMines = 0;
