@@ -76,4 +76,15 @@ public class Board {
         return this.grid;
     }
 
+    public String toString() { 
+        StringBuilder out = new StringBuilder();
+        for (Square[] row : this.grid) {
+            for (Square col : row) {
+                out.append(col.isMine ? "X" : col.mineNeighbours);
+            }
+            out.append("\n");
+        }
+        return out.toString();
+    }     
+
 }
