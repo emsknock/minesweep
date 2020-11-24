@@ -5,4 +5,5 @@
 | 10.11. | 1     | Installed the JDK                                                  |
 | 17.11. | 1     | Fought with NetBeans to create maven project                       |
 | 17.11. | 2     | Struggled to create an executable project and to get JUnit working |
+| 24.11. | 2     | Wrote code to generate a valid board and added tests for it        |
 | Total  | 7     |                                                                    |
