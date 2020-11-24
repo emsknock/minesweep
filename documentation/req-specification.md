@@ -4,6 +4,7 @@ The application is a clone of the [Minesweeper](https://en.wikipedia.org/wiki/Mi
 
 ## Basic functionality
 
+* [x] A board is generated
 * The player can customise the board
     * Set the width and height of the grid
     * Set the amount of mines
