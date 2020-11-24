@@ -56,11 +56,11 @@ public class Board {
 
     }
 
-    private boolean isInBounds(int y, int x) {
+    public boolean isInBounds(int y, int x) {
         return y >= 0 && y < this.GRID_H && x >= 0 && x < this.GRID_W;
     }
 
-    private ArrayList<Square> getNeighbours(int y, int x) {
+    public ArrayList<Square> getNeighbours(int y, int x) {
         ArrayList neighbours = new ArrayList<Square>();
         for (int[] delta : Board.neighbourDeltas) {
             int ny = y + delta[0];
