@@ -1,8 +1,19 @@
 package minesweep.game;
 
-import java.util.Random;
+import java.util.*;
 
 public class Board {
+
+    private static final int[][] neighbourDeltas = {
+        { -1, -1 },
+        { -1, 0 },
+        { -1, 1 },
+        { 0, -1 },
+        { 0, 1 },
+        { 1, -1 },
+        { 1, 0 },
+        { 1, 1 },
+    };
 
     private int GRID_W;
     private int GRID_H;
@@ -37,8 +48,28 @@ public class Board {
             sq.isMine = true;
             placedMines++;
 
+            for (Square neighbour : this.getNeighbours(rowIdx, colIdx)) {
+                neighbour.mineNeighbours++;
+            }
+
         }
 
+    }
+
+    private boolean isInBounds(int y, int x) {
+        return y >= 0 && y < this.GRID_H && x >= 0 && x < this.GRID_W;
+    }
+
+    private ArrayList<Square> getNeighbours(int y, int x) {
+        ArrayList neighbours = new ArrayList<Square>();
+        for (int[] delta : Board.neighbourDeltas) {
+            int ny = y + delta[0];
+            int nx = x + delta[1];
+            if (this.isInBounds(ny, nx)) {
+                neighbours.add(this.grid[ny][nx]);
+            }
+        }
+        return neighbours;
     }
 
     public Square[][] getGrid() {
