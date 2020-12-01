@@ -1,11 +1,11 @@
 package minesweep;
-import minesweep.game.Board;
+
+import minesweep.ui.MinesweepUI;
 
 public class Main {
 
     public static void main(String[] args) {
-        Board b = new Board(32, 64, 128, 1L);
-        System.out.println(b.toString());
+        MinesweepUI.main(args);
     }
     
 }
