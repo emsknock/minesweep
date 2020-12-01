@@ -1,6 +1,10 @@
 /laskarit/viikko2/Unicafe/target
 .DS_Store
 
+.classpath
+.settings
+.project
+
 # Compiled class file
 *.class
 
