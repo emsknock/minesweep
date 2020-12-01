@@ -72,6 +72,11 @@ public class Board {
         return neighbours;
     }
 
+    public boolean reveal(int y, int x) {
+        this.grid[y][x].isRevealed = true;
+        return this.grid[y][x].isMine;
+    }
+
     public Square[][] getGrid() {
         return this.grid;
     }
