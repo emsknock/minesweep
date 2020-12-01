@@ -19,3 +19,7 @@ Create test coverage report:
 ```bash
 $ cd minesweep && mvn test jacoco:report
 ```
+Run checkstyle:
+```bash
+$ cd minesweep && mvn jxr:jxr checkstyle:checkstyle
+```
