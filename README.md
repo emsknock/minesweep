@@ -26,3 +26,7 @@ Run checkstyle:
 ```bash
 $ cd minesweep && mvn jxr:jxr checkstyle:checkstyle
 ```
+Create jar:
+```bash
+$ cd minesweep && mvn package
+```
