@@ -61,7 +61,7 @@ public class Board {
     }
 
     public ArrayList<Square> getNeighbours(int y, int x) {
-        ArrayList neighbours = new ArrayList<Square>();
+        ArrayList<Square> neighbours = new ArrayList<Square>();
         for (int[] delta : Board.neighbourDeltas) {
             int ny = y + delta[0];
             int nx = x + delta[1];
