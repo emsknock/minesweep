@@ -1,6 +1,6 @@
 /laskarit/viikko2/Unicafe/target
 .DS_Store
-
+.vscode
 .classpath
 .settings
 .project
