@@ -32,7 +32,7 @@ public class Board {
         for (int rowIdx = 0; rowIdx < height; rowIdx++) {
             this.grid[rowIdx] = new Square[width];
             for (int colIdx = 0; colIdx < width; colIdx++) {
-                this.grid[rowIdx][colIdx] = new Square();
+                this.grid[rowIdx][colIdx] = new Square(rowIdx, colIdx);
             }
         }
 
@@ -73,8 +73,23 @@ public class Board {
     }
 
     public boolean reveal(int y, int x) {
-        this.grid[y][x].isRevealed = true;
-        return this.grid[y][x].isMine;
+        
+        Square guessedSquare = this.grid[y][x];
+        guessedSquare.isRevealed = true;
+
+        if (guessedSquare.isMine) return true;
+        if (guessedSquare.mineNeighbours > 0) return false;
+
+        for (Square neighbour : this.getNeighbours(y, x)) {
+            reveal(neighbour);
+        }
+
+        return false;
+
+    }
+    
+    public boolean reveal(Square guess) {
+        return this.reveal(guess.y, guess.x);
     }
 
     public Square[][] getGrid() {
