@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Board {
 
-    private static final int[][] neighbourDeltas = {
+    private static final int[][] NEIGHBOUR_DELTAS = {
         { -1, -1 },
         { -1, 0 },
         { -1, 1 },
@@ -15,8 +15,8 @@ public class Board {
         { 1, 1 },
     };
 
-    private int GRID_W;
-    private int GRID_H;
+    private int gridW;
+    private int gridH;
     private Random rng;
 
     private Square[][] grid;
@@ -25,8 +25,8 @@ public class Board {
 
         this.rng = new Random(randSeed);
         
-        this.GRID_H = height;
-        this.GRID_W = width;
+        this.gridH = height;
+        this.gridW = width;
 
         this.grid = new Square[height][width];
         for (int rowIdx = 0; rowIdx < height; rowIdx++) {
@@ -43,7 +43,9 @@ public class Board {
             int colIdx = rng.nextInt(width);
             Square sq = this.grid[rowIdx][colIdx];
 
-            if (sq.isMine) continue;
+            if (sq.isMine) { 
+                continue;
+            }
             
             sq.isMine = true;
             placedMines++;
@@ -57,12 +59,12 @@ public class Board {
     }
 
     public boolean isInBounds(int y, int x) {
-        return y >= 0 && y < this.GRID_H && x >= 0 && x < this.GRID_W;
+        return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
     }
 
     public ArrayList<Square> getNeighbours(int y, int x) {
         ArrayList<Square> neighbours = new ArrayList<Square>();
-        for (int[] delta : Board.neighbourDeltas) {
+        for (int[] delta : Board.NEIGHBOUR_DELTAS) {
             int ny = y + delta[0];
             int nx = x + delta[1];
             if (this.isInBounds(ny, nx)) {
@@ -77,8 +79,12 @@ public class Board {
         Square guessedSquare = this.grid[y][x];
         guessedSquare.isRevealed = true;
 
-        if (guessedSquare.isMine) return true;
-        if (guessedSquare.mineNeighbours > 0) return false;
+        if (guessedSquare.isMine) {
+            return true;
+        }
+        if (guessedSquare.mineNeighbours > 0) {
+            return false;
+        }
 
         for (Square neighbour : this.getNeighbours(y, x)) {
             reveal(neighbour);
