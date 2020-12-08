@@ -77,7 +77,7 @@ public class MinesweepUI extends Application {
         grid.setHgap(2);
         grid.setVgap(2);
 
-        Board board = new Board(16, 30, 99, 1L);
+        Board board = new Board(16, 30, 99, System.currentTimeMillis());
         for (Square[] row : board.getGrid()) {
             for (Square square : row) {
                 grid.add(square(true, square.isMine ? -1 : square.mineNeighbours), square.x, square.y);
