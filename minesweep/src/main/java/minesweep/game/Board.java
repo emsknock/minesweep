@@ -122,14 +122,18 @@ public class Board {
     public boolean reveal(int y, int x) {
 
         Square guessedSquare = this.grid[y][x];
-        guessedSquare.isRevealed = true;
 
+        if (guessedSquare.isRevealed) {
+            return false;
+        }
         if (guessedSquare.isMine) {
             return true;
         }
         if (guessedSquare.mineNeighbours > 0) {
             return false;
         }
+
+        guessedSquare.isRevealed = true;
 
         for (Square neighbour : this.getNeighbours(y, x)) {
             reveal(neighbour);
