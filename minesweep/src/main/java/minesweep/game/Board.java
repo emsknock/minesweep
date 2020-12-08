@@ -2,8 +2,14 @@ package minesweep.game;
 
 import java.util.*;
 
+/**
+ * The Board class keeps track of a nxm grid of Squares, generates a valid
+ * minesweeper game from a random seed, and handles the logic of revealing
+ * a square on the game grid.
+ */
 public class Board {
 
+    // The position differences of a given square to its neighbours
     private static final int[][] NEIGHBOUR_DELTAS = {
         { -1, -1 },
         { -1, 0 },
@@ -35,6 +41,7 @@ public class Board {
 
     }
 
+    /** Sets the grid to contain only "0" squares */
     public void clearBoard() {
         this.grid = new Square[gridH][gridW];
         for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
@@ -45,6 +52,11 @@ public class Board {
         }
     }
 
+    /**
+     * Places the amount of mines given in the constructor to the board.
+     * 
+     * @implNote Assumes the board only contains "0" squares and no mines beforehand
+     */
     public void placeMines() {
         int placedMines = 0;
         while (placedMines != mineCount) {
@@ -67,10 +79,22 @@ public class Board {
         }
     }
 
+    /**
+     * Checks whether the given coordinates are in bound of the board
+     * @param y
+     * @param x
+     */
     public boolean isInBounds(int y, int x) {
         return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
     }
 
+    /**
+     * For a given coordinate, return a list containing all of its neighbours.
+     * Most squares have 8 neighbours, but e.g. the corners only have 3.
+     * 
+     * @param y The Y coordinate
+     * @param x The X coordinate
+     */
     public ArrayList<Square> getNeighbours(int y, int x) {
         ArrayList<Square> neighbours = new ArrayList<Square>();
         for (int[] delta : Board.NEIGHBOUR_DELTAS) {
@@ -83,6 +107,14 @@ public class Board {
         return neighbours;
     }
 
+    /**
+     * Reveal the square at the given coordinates. If the square is a "0",
+     * will continue recursively revealing all of its neighbours, until no "0"
+     * squares remain.
+     * @param y The Y coordinate
+     * @param x The X coordinate
+     * @return `true` iff the revealed square was a mine
+     */
     public boolean reveal(int y, int x) {
         
         Square guessedSquare = this.grid[y][x];
@@ -103,6 +135,13 @@ public class Board {
 
     }
     
+    /**
+     * Reveal the given square with the same recursion as the coordinate-based
+     * reveal method.
+     * @see minesweep.game.Board#reveal(int, int) The coordinate based reveal
+     * @param guess
+     * @return
+     */
     public boolean reveal(Square guess) {
         return this.reveal(guess.y, guess.x);
     }
