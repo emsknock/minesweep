@@ -17,8 +17,9 @@ public class Board {
 
     private int gridW;
     private int gridH;
+    private int mineCount;
     private Random rng;
-
+    
     private Square[][] grid;
 
     public Board(int height, int width, int mineCount, long randSeed) {
@@ -27,20 +28,29 @@ public class Board {
         
         this.gridH = height;
         this.gridW = width;
+        this.mineCount = mineCount;
 
-        this.grid = new Square[height][width];
-        for (int rowIdx = 0; rowIdx < height; rowIdx++) {
-            this.grid[rowIdx] = new Square[width];
-            for (int colIdx = 0; colIdx < width; colIdx++) {
+        clearBoard();
+        placeMines();
+
+    }
+
+    public void clearBoard() {
+        this.grid = new Square[gridH][gridW];
+        for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
+            this.grid[rowIdx] = new Square[gridW];
+            for (int colIdx = 0; colIdx < gridW; colIdx++) {
                 this.grid[rowIdx][colIdx] = new Square(rowIdx, colIdx);
             }
         }
+    }
 
+    public void placeMines() {
         int placedMines = 0;
         while (placedMines != mineCount) {
 
-            int rowIdx = rng.nextInt(height);
-            int colIdx = rng.nextInt(width);
+            int rowIdx = rng.nextInt(gridH);
+            int colIdx = rng.nextInt(gridW);
             Square sq = this.grid[rowIdx][colIdx];
 
             if (sq.isMine) { 
@@ -55,7 +65,6 @@ public class Board {
             }
 
         }
-
     }
 
     public boolean isInBounds(int y, int x) {
