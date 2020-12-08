@@ -47,6 +47,7 @@ public class MinesweepUI extends Application {
         }
 
         text.setTextFill(SQUARE_COLOURS[s.mineNeighbours]);
+        text.setVisible(s.isRevealed);
         
         if (s.isRevealed) {
             box.setFill(Color.LIGHTGREY);
@@ -58,8 +59,6 @@ public class MinesweepUI extends Application {
             box.setFill(Color.BLUE);
             box.setStroke(Color.DARKBLUE);
         }
-        
-        text.setVisible(s.isRevealed);
 
         square.getChildren().addAll(box, text);
 
