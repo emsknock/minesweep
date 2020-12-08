@@ -9,6 +9,7 @@ A minesweeper game written for the University of Helsinki Software Development M
 * [Requirement Specification](documentation/req-specification.md)
 * [Timekeeping](documentation/hours-worked.md)
 * [Architecture](documentation/architecture.md)
+* [User manual](documentations/user-manual.md)
 
 ## Command line
 Run the program:
