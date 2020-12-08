@@ -126,14 +126,15 @@ public class Board {
         if (guessedSquare.isRevealed) {
             return false;
         }
+
+        guessedSquare.isRevealed = true;
+
         if (guessedSquare.isMine) {
             return true;
         }
         if (guessedSquare.mineNeighbours > 0) {
             return false;
         }
-
-        guessedSquare.isRevealed = true;
 
         for (Square neighbour : this.getNeighbours(y, x)) {
             reveal(neighbour);
@@ -157,6 +158,10 @@ public class Board {
 
     public Square[][] getGrid() {
         return this.grid;
+    }
+
+    public void toggleFlag(Square s) {
+        s.isFlagged = !s.isFlagged;
     }
 
     public String toString() {

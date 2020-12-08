@@ -2,13 +2,10 @@ package minesweep.ui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import minesweep.game.Board;
@@ -16,55 +13,9 @@ import minesweep.game.Square;
 
 public class MinesweepUI extends Application {
 
-    private final static int SQUARE_SIZE = 20;
     private final static int WINDOW_PADDING = 15;
-    private final static Color[] SQUARE_COLOURS = {
-        Color.BLACK, // 0 included for simplicity's sake
-        Color.BLUE,
-        Color.GREEN,
-        Color.RED,
-        Color.PURPLE,
-        Color.MAROON,
-        Color.TURQUOISE,
-        Color.BLACK,
-        Color.GREY,
-    };
 
     private static Board board;
-
-    public StackPane renderSquare(Square s) {
-
-        StackPane square = new StackPane();
-        Rectangle box = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
-
-        Label text;
-        if (s.isFlagged || s.mineNeighbours == 0) {
-            text = new Label("");
-        } else if (s.isMine) {
-            text = new Label("X");
-        } else {
-            text = new Label(String.valueOf(s.mineNeighbours));
-        }
-
-        text.setTextFill(SQUARE_COLOURS[s.mineNeighbours]);
-        text.setVisible(s.isRevealed);
-        
-        if (s.isRevealed) {
-            box.setFill(Color.LIGHTGREY);
-            box.setStroke(Color.GREY);
-        } else if (s.isFlagged) {
-            box.setFill(Color.RED);
-            box.setStroke(Color.DARKRED);
-        } else {
-            box.setFill(Color.BLUE);
-            box.setStroke(Color.DARKBLUE);
-        }
-
-        square.getChildren().addAll(box, text);
-
-        return square;
-
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -78,11 +29,15 @@ public class MinesweepUI extends Application {
 
         for (Square[] row : board.getGrid()) {
             for (Square square : row) {
+
+                Node squareNode = new SquareUI(board, square, grid);
+
                 grid.add(
-                    renderSquare(square),
+                    squareNode,
                     square.x,
                     square.y
                 );
+
             }
         }
 
@@ -91,8 +46,8 @@ public class MinesweepUI extends Application {
         Scene mainScene = new Scene(mainPane);
 
         primaryStage.setScene(mainScene);
-        primaryStage.setMinWidth(2 * WINDOW_PADDING + 30 * SQUARE_SIZE);
-        primaryStage.setMinHeight(2 * WINDOW_PADDING + 16 * SQUARE_SIZE);
+        primaryStage.setMinWidth(2 * WINDOW_PADDING + 30 * SquareUI.SQUARE_SIZE);
+        primaryStage.setMinHeight(2 * WINDOW_PADDING + 16 * SquareUI.SQUARE_SIZE);
         primaryStage.show();
 
     }
