@@ -43,7 +43,7 @@ public class SquareUI extends StackPane {
         Rectangle box = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
 
         Label text;
-        if (s.isFlagged || s.mineNeighbours == 0) {
+        if ((s.isFlagged && !s.isRevealed) || (s.mineNeighbours == 0 && !s.isMine)) {
             text = new Label("");
         } else if (s.isMine) {
             text = new Label("X");
