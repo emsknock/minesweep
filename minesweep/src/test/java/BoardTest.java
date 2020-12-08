@@ -90,4 +90,30 @@ public class BoardTest {
         }
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void boardConstructorThrowsWhenMineCountDoesntFitOnBoard() {
+        new Board(8, 8, 65, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void boardConstructorThrowsWhenGivenZeroHeight() {
+        new Board(0, 8, 64, 1L);
+        new Board(0, 8, 1, 1L);
+        new Board(0, 8, 0, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void boardConstructorThrowsWhenGivenZeroWidth() {
+        new Board(8, 0, 64, 1L);
+        new Board(8, 0, 1, 1L);
+        new Board(8, 0, 0, 1L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void boardConstructorThrowsWhenGivenZeroHeightAndWidth() {
+        new Board(0, 0, 64, 1L);
+        new Board(0, 0, 1, 1L);
+        new Board(0, 0, 0, 1L);
+    }
+
 }

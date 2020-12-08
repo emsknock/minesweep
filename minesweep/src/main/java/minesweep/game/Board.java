@@ -36,6 +36,13 @@ public class Board {
         this.gridW = width;
         this.mineCount = mineCount;
 
+        if (height == 0 || width == 0) {
+            throw new IllegalArgumentException("Cannot create board with width or height of 0");
+        }
+        if (mineCount > height * width) {
+            throw new IllegalArgumentException("Cannot place " + mineCount + " mines on a " + height + "x" + width + "board");
+        }
+
         clearBoard();
         placeMines();
 
