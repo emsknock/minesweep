@@ -51,15 +51,15 @@ public class SquareUI extends StackPane {
             text = new Label(String.valueOf(s.mineNeighbours));
         }
 
-        text.setTextFill(SQUARE_COLOURS[s.mineNeighbours]);
+        text.setTextFill(s.isMine ? Color.BLACK : SQUARE_COLOURS[s.mineNeighbours]);
         text.setVisible(s.isRevealed);
 
         if (s.isRevealed) {
             box.setFill(Color.LIGHTGREY);
             box.setStroke(Color.GREY);
         } else if (s.isFlagged) {
-            box.setFill(Color.RED);
-            box.setStroke(Color.DARKRED);
+            box.setFill(Color.ORANGE);
+            box.setStroke(Color.DARKORANGE);
         } else {
             box.setFill(Color.BLUE);
             box.setStroke(Color.DARKBLUE);
