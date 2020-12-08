@@ -29,13 +29,6 @@ public class MinesweepUI extends Application {
         Color.GREY,
     };
 
-    /**
-     * Creates a StackPane representing a square on the board
-     * 
-     * @param isRevealed
-     * @param value    This square's mine neighbours (0–8) or -1 for a mine
-     * @return Stackpane
-     */
     public StackPane square(boolean isRevealed, int value) {
 
         StackPane square = new StackPane();
