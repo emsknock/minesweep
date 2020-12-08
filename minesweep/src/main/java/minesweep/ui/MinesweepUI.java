@@ -29,30 +29,34 @@ public class MinesweepUI extends Application {
         Color.GREY,
     };
 
-    public StackPane square(boolean isRevealed, int value) {
+    public StackPane renderSquare(Square s) {
 
         StackPane square = new StackPane();
         Rectangle box = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
 
         Label text;
-        switch (value) {
-            case 0:
-                text = new Label("");
-                break;
-            case -1:
-                text = new Label("X");
-                break;
-            default:
-                text = new Label(String.valueOf(value));
+        if (s.isFlagged || s.mineNeighbours == 0) {
+            text = new Label("");
+        } else if (s.isMine) {
+            text = new Label("X");
+        } else {
+            text = new Label(String.valueOf(s.mineNeighbours));
         }
 
-        if (value >= 0)
-            text.setTextFill(SQUARE_COLOURS[value]);
+        text.setTextFill(SQUARE_COLOURS[s.mineNeighbours]);
         
-        box.setFill(isRevealed ? Color.LIGHTGREY : Color.BLUE);
-        box.setStroke(isRevealed ? Color.GREY : Color.DARKBLUE);
+        if (s.isRevealed) {
+            box.setFill(Color.LIGHTGREY);
+            box.setStroke(Color.GREY);
+        } else if (s.isFlagged) {
+            box.setFill(Color.RED);
+            box.setStroke(Color.DARKRED);
+        } else {
+            box.setFill(Color.BLUE);
+            box.setStroke(Color.DARKBLUE);
+        }
         
-        text.setVisible(isRevealed);
+        text.setVisible(s.isRevealed);
 
         square.getChildren().addAll(box, text);
 
@@ -73,7 +77,11 @@ public class MinesweepUI extends Application {
         Board board = new Board(16, 30, 99, System.currentTimeMillis());
         for (Square[] row : board.getGrid()) {
             for (Square square : row) {
-                grid.add(square(true, square.isMine ? -1 : square.mineNeighbours), square.x, square.y);
+                grid.add(
+                    renderSquare(square),
+                    square.x,
+                    square.y
+                );
             }
         }
 
