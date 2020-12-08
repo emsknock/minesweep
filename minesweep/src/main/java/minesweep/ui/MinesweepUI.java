@@ -18,7 +18,7 @@ public class MinesweepUI extends Application {
 
     private final static int SQUARE_SIZE = 20;
     private final static Color[] SQUARE_COLOURS = {
-        Color.BLACK,
+        Color.BLACK, // 0 included for simplicity's sake
         Color.BLUE,
         Color.GREEN,
         Color.RED,
