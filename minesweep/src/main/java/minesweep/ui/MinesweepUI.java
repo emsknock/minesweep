@@ -20,6 +20,8 @@ public class MinesweepUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        System.out.println(board.toString());
+
         VBox mainPane = new VBox();
         mainPane.setPadding(new Insets(WINDOW_PADDING));
 
