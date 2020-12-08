@@ -70,7 +70,7 @@ public class MinesweepUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        VBox mainPane = new VBox(10);
+        VBox mainPane = new VBox();
         mainPane.setPadding(new Insets(15));
 
         GridPane grid = new GridPane();
@@ -86,7 +86,7 @@ public class MinesweepUI extends Application {
 
         mainPane.getChildren().add(grid);
 
-        Scene mainScene = new Scene(mainPane, 10, 10);
+        Scene mainScene = new Scene(mainPane);
 
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(15 + SQUARE_SIZE * 30 + 15);
