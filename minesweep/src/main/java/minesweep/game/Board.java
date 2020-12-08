@@ -57,7 +57,7 @@ public class Board {
     /**
      * Places the amount of mines given in the constructor to the board.
      * 
-     * @implNote Assumes the board only contains "0" squares and no mines beforehand
+     * Note: Assumes the board only contains "0" squares and no mines beforehand
      */
     public void placeMines() {
         int placedMines = 0;
