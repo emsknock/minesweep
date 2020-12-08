@@ -144,8 +144,8 @@ public class Board {
      * reveal method.
      * 
      * @see minesweep.game.Board#reveal(int, int) The coordinate based reveal
-     * @param guess
-     * @return
+     * @param guess The guessed square object
+     * @return `true` iff the revealed square was a mine
      */
     public boolean reveal(Square guess) {
         return this.reveal(guess.y, guess.x);
