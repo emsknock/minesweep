@@ -3,6 +3,7 @@ A minesweeper game written for the University of Helsinki Software Development M
 
 ## Releases
 * [Week 5](https://github.com/emsknock/minesweep/releases/tag/v0.1-alpha)
+* [Week 6](https://github.com/emsknock/minesweep/releases/tag/v0.2-alpha)
 
 ## Documentation
 * [Requirement Specification](documentation/req-specification.md)
