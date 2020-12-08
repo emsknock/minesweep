@@ -7,4 +7,5 @@
 | 17.11. | 2     | Struggled to create an executable project and to get JUnit working |
 | 24.11. | 2     | Wrote code to generate a valid board and added tests for it        |
 | 01.12  | 2     | Added reveal method, groundwork for UI, and JAR generation         |
-| Total  | 11    |                                                                    |
+| 08.12  | 2     | Created initial GUI                                                |
+| Total  | 13    |                                                                    |
