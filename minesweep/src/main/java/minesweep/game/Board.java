@@ -84,8 +84,8 @@ public class Board {
     /**
      * Checks whether the given coordinates are in bound of the board
      * 
-     * @param y
-     * @param x
+     * @param y The Y coordinate
+     * @param x The X coordinate
      */
     public boolean isInBounds(int y, int x) {
         return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
