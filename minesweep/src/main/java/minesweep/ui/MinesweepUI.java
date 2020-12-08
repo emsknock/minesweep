@@ -17,6 +17,7 @@ import minesweep.game.Square;
 public class MinesweepUI extends Application {
 
     private final static int SQUARE_SIZE = 20;
+    private final static int WINDOW_PADDING = 15;
     private final static Color[] SQUARE_COLOURS = {
         Color.BLACK, // 0 included for simplicity's sake
         Color.BLUE,
@@ -70,7 +71,7 @@ public class MinesweepUI extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         VBox mainPane = new VBox();
-        mainPane.setPadding(new Insets(15));
+        mainPane.setPadding(new Insets(WINDOW_PADDING));
 
         GridPane grid = new GridPane();
         grid.setHgap(2);
@@ -91,8 +92,8 @@ public class MinesweepUI extends Application {
         Scene mainScene = new Scene(mainPane);
 
         primaryStage.setScene(mainScene);
-        primaryStage.setMinWidth(15 + SQUARE_SIZE * 30 + 15);
-        primaryStage.setMinHeight(15 + SQUARE_SIZE * 16 + 15);
+        primaryStage.setMinWidth(2 * WINDOW_PADDING + 30 * SQUARE_SIZE);
+        primaryStage.setMinHeight(2 * WINDOW_PADDING + 16 * SQUARE_SIZE);
         primaryStage.show();
 
     }
