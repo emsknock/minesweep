@@ -29,6 +29,8 @@ public class MinesweepUI extends Application {
         Color.GREY,
     };
 
+    private static Board board;
+
     public StackPane renderSquare(Square s) {
 
         StackPane square = new StackPane();
@@ -74,7 +76,6 @@ public class MinesweepUI extends Application {
         grid.setHgap(2);
         grid.setVgap(2);
 
-        Board board = new Board(16, 30, 99, System.currentTimeMillis());
         for (Square[] row : board.getGrid()) {
             for (Square square : row) {
                 grid.add(
@@ -97,6 +98,7 @@ public class MinesweepUI extends Application {
     }
 
     public static void main(String[] args) {
+        board = new Board(16, 30, 99, System.currentTimeMillis());
         launch(args);
     }
 
