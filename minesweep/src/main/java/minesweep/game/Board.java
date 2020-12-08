@@ -41,7 +41,9 @@ public class Board {
 
     }
 
-    /** Sets the grid to contain only "0" squares */
+    /**
+     * Sets the grid to contain only "0" squares
+     */
     public void clearBoard() {
         this.grid = new Square[gridH][gridW];
         for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
