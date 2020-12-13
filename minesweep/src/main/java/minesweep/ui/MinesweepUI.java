@@ -8,14 +8,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import minesweep.game.Board;
-import minesweep.game.Square;
+import minesweep.game.*;
 
 public class MinesweepUI extends Application {
 
     private final static int WINDOW_PADDING = 15;
 
-    private static Board board;
+    private static BoardLogic board;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -55,7 +54,7 @@ public class MinesweepUI extends Application {
     }
 
     public static void main(String[] args) {
-        board = new Board(16, 30, 99, System.currentTimeMillis());
+        board = new BoardLogic(16, 30, 99, System.currentTimeMillis());
         launch(args);
     }
 

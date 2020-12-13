@@ -1,6 +1,7 @@
 package minesweep.game;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The Board class keeps track of a nxm grid of Squares, generates a valid
@@ -21,16 +22,22 @@ public class Board {
         { 1, 1 },
     };
 
-    private int gridW;
-    private int gridH;
+    protected int height;
+    protected int width;
     protected int guessCount = 0;
 
     private Square[][] grid;
 
+    /**
+     * Create a new board with the given height and width and with all squares
+     * set to "0". Both height and width must both be over 0.
+     * @param height The height of the board. Must be over 0.
+     * @param width The width of the board. Must be over 0.
+     */
     public Board(int height, int width) {
 
-        this.gridH = height;
-        this.gridW = width;
+        this.height = height;
+        this.width = width;
 
         if (height < 1 || width < 1) {
             throw new IllegalArgumentException("Board width and height must both be at least 1");
@@ -47,10 +54,10 @@ public class Board {
      */
     public void clearBoard() {
         this.guessCount = 0;
-        this.grid = new Square[gridH][gridW];
-        for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
-            this.grid[rowIdx] = new Square[gridW];
-            for (int colIdx = 0; colIdx < gridW; colIdx++) {
+        this.grid = new Square[height][width];
+        for (int rowIdx = 0; rowIdx < height; rowIdx++) {
+            this.grid[rowIdx] = new Square[width];
+            for (int colIdx = 0; colIdx < width; colIdx++) {
                 this.grid[rowIdx][colIdx] = new Square(rowIdx, colIdx);
             }
         }
@@ -62,7 +69,7 @@ public class Board {
      * @param x The X coordinate
      */
     public boolean isInBounds(int y, int x) {
-        return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
+        return y >= 0 && y < this.height && x >= 0 && x < this.width;
     }
 
     /**
@@ -81,7 +88,7 @@ public class Board {
      * @param y The Y coordinate
      * @param x The X coordinate
      */
-    public ArrayList<Square> getNeighbours(int y, int x) {
+    public List<Square> getNeighbours(int y, int x) {
         ArrayList<Square> neighbours = new ArrayList<Square>();
         for (int[] delta : Board.NEIGHBOUR_DELTAS) {
             int ny = y + delta[0];
@@ -99,7 +106,7 @@ public class Board {
      * @param s The square to reveal
      * @return
      */
-    public ArrayList<Square> getNeighbours(Square s) {
+    public List<Square> getNeighbours(Square s) {
         return getNeighbours(s.y, s.x);
     }
 
@@ -110,20 +117,33 @@ public class Board {
      * @return The number of flagged neighbours (0–8)
      */
     public int numFlaggedNeighbours(Square s) {
-        return getNeighbours(s).stream().reduce(
-            0,
-            (flaggedNeighbours, neighbour) ->
-                flaggedNeighbours + (neighbour.isFlagged ? 1 : 0),
-            Integer::sum
-        );
+        return getNeighbours(s)
+            .stream()
+            .reduce(
+                0,
+                (flaggedNeighbours, neighbour) ->
+                    flaggedNeighbours + (neighbour.isFlagged ? 1 : 0),
+                Integer::sum
+            );
     }
 
+    /**
+     * Toggles wether the given square is flagged or not.
+     * Doesn't check wether the square is revealed or not.
+     * @param s The square to flag or unflag
+     * @return The new state of flagging
+     */
+    public boolean toggleFlag(Square s) {
+        s.isFlagged = !s.isFlagged;
+        return s.isFlagged;
+    }
+
+    /**
+     * Returns a reference to the Square[y][x] array that represents the board
+     * @return A 2d array of Squares with [y][x] order
+     */
     public Square[][] getRawGrid() {
         return this.grid;
-    }
-
-    public void toggleFlag(Square s) {
-        s.isFlagged = !s.isFlagged;
     }
 
     public String toString() {

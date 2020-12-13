@@ -12,22 +12,29 @@ import minesweep.game.*;
 public class SquareUI extends StackPane {
 
     public final static int SQUARE_SIZE = 20;
-    public final static Color[] SQUARE_COLOURS = { Color.BLACK, // 0 included for simplicity's sake
-            Color.BLUE, Color.GREEN, Color.RED, Color.PURPLE, Color.MAROON, Color.TURQUOISE, Color.BLACK, Color.GREY, };
+    public final static Color[] SQUARE_COLOURS = {
+        Color.BLACK, // 0 included for simplicity's sake
+        Color.BLUE,
+        Color.GREEN,
+        Color.RED,
+        Color.PURPLE,
+        Color.MAROON,
+        Color.DARKSLATEGRAY,
+        Color.BLACK,
+        Color.DARKSLATEGRAY,
+    };
 
     private Square s;
 
-    public SquareUI(Board b, Square s, GridPane g) {
+    public SquareUI(BoardLogic b, Square s, GridPane g) {
         
         this.s = s;
 
         addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
             if (e.getButton() == MouseButton.PRIMARY) {
-                System.out.println("Primary");
-                b.reveal(s);
+                b.guess(s);
                 g.getChildren().forEach(child -> { ((SquareUI) child).update(); });
             } else {
-                System.out.println("Secondary");
                 b.toggleFlag(s);
             }
             update();

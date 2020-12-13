@@ -8,17 +8,13 @@ public class BoardLogic {
     Random rng;
     int mineCount;
 
-    BoardLogic(int height, int width, int mineCount, long randSeed) {
+    public BoardLogic(int height, int width, int mineCount, long randSeed) {
         this.board = new Board(height, width);
         this.rng = new Random(randSeed);
         this.mineCount = mineCount;
     }
 
     public boolean reveal(int y, int x) {
-
-        if (board.guessCount == 0) {
-            placeMines(y, x);
-        }
 
         Square guess = board.getSquare(y, x);
 
@@ -36,7 +32,10 @@ public class BoardLogic {
                 // possible that this will reveal a mine — thus we return
                 // true if any of the neighbour reveals returns true
                 // (i.e. a mine is revealed)
-                return board.getNeighbours(guess).stream().anyMatch(this::reveal);
+                return board.getNeighbours(guess)
+                    .stream()
+                    .filter(neighbour -> !neighbour.isRevealed && !neighbour.isFlagged)
+                    .anyMatch(this::reveal);
             }
         } else {
             // Revealing an unrevealed "0" should immediately reveal all
@@ -58,28 +57,61 @@ public class BoardLogic {
     }
 
     public boolean reveal(Square guess) {
-        return reveal(guess.y, guess.x);
+        try {
+            return reveal(guess.y, guess.x);
+        } catch (StackOverflowError e) {
+            e.printStackTrace();
+            System.exit(1);
+            return true;
+        }
     }
 
-    public void placeMines(int avoidX, int avoidY) {
+    public boolean guess(Square guess) {
+        if (board.guessCount == 0) {
+            placeMines(guess.y, guess.x);
+        }
+        board.guessCount++;
+        return reveal(guess);
+    }
+
+    /**
+     * @see Board#toggleFlag(Square)
+     * @param s The square to flag
+     * @return The new state of flagging
+     */
+    public boolean toggleFlag(Square s) {
+        return board.toggleFlag(s);
+    }
+
+    public Square[][] getRawGrid() {
+        return board.getRawGrid();
+    }
+
+    public void placeMines(int avoidY, int avoidX) {
         int numMinesPlaced = 0;
         while(numMinesPlaced != mineCount) {
+
+            System.out.println("Placed mines so far: " + numMinesPlaced);
             
-            int y = rng.nextInt();
-            int x = rng.nextInt();
+            int y = rng.nextInt(board.height);
+            int x = rng.nextInt(board.width);
+
+            System.out.println("Trying to place mine at " + x + ":" + y);
+
             Square potentialMine = board.getSquare(y, x);
 
             if (
                 // Cannot place on top of existing one:
-                !potentialMine.isMine ||
+                !potentialMine.isMine &&
                 // Cannot place in the first clicked square:
-                !(y == avoidY && x == avoidX) ||
+                y != avoidY && x != avoidX &&
                 // Cannot place to any of the first clicked square's neighbours:
-                !board.getNeighbours(potentialMine)
+                board.getNeighbours(potentialMine)
                     .stream()
-                    .anyMatch(neighbour -> neighbour.y == avoidY && neighbour.x == avoidX)
+                    .allMatch(neighbour -> neighbour.y != avoidY && neighbour.x != avoidX)
             ) {
                 // All of the above predicates passed; we can place a mine here
+                System.out.println("Mine placement successful");
                 potentialMine.isMine = true;
                 numMinesPlaced++;
                 for (Square neighbour : board.getNeighbours(potentialMine)) {
@@ -88,6 +120,8 @@ public class BoardLogic {
             }
 
         }
+        System.out.println("Mines placed!");
+        System.out.println(board);
     }
 
 }
