@@ -9,7 +9,7 @@ public class BoardTest {
     @Test
     public void createdBoardIsCorrectSize() {
         Board _b = new Board(256, 128, 64, 1L);
-        Square[][] grid = _b.getGrid();
+        Square[][] grid = _b.getRawGrid();
         assertEquals(256, grid.length);
         for(Square[] row : grid) {
             assertEquals(128, row.length);
@@ -18,7 +18,7 @@ public class BoardTest {
 
 
     private int getMineCount(Board b) {
-        Square[][] grid = b.getGrid();
+        Square[][] grid = b.getRawGrid();
         int mineCount = 0;
         for (Square[] row : grid) {
             for (Square col : row) {
@@ -76,7 +76,7 @@ public class BoardTest {
     @Test
     public void mineNeighboursCalculatedCorrectly() {
         Board _b = new Board(256, 256, 32, 1L);
-        Square[][] _g = _b.getGrid();
+        Square[][] _g = _b.getRawGrid();
         for (int y = 0; y < 256; y++) {
             for (int x = 0; x < 256; x++) {
                 Square square = _g[y][x];

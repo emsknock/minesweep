@@ -41,7 +41,9 @@ public class Board {
     }
 
     /**
-     * Sets the grid to contain only "0" squares
+     * Resets the board:
+     * - Sets the guess count to 0
+     * - Sets all squares to unflagged, unrevealed "0" squares
      */
     public void clearBoard() {
         this.guessCount = 0;
@@ -56,7 +58,6 @@ public class Board {
 
     /**
      * Checks whether the given coordinates are in bound of the board
-     * 
      * @param y The Y coordinate
      * @param x The X coordinate
      */
@@ -64,14 +65,19 @@ public class Board {
         return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
     }
 
+    /**
+     * Returns a reference to the square object at the given coordinates
+     * @param y The Y coordinate
+     * @param x The X coordinate
+     * @return The square object at the given coordinates
+     */
     public Square getSquare(int y, int x) {
         return this.grid[y][x];
     }
 
     /**
-     * For a given coordinate, return a list containing all of its neighbours. Most
-     * squares have 8 neighbours, but e.g. the corners only have 3.
-     * 
+     * For a given coordinate, returns a list containing all of its neighbours.
+     * Most squares have 8 neighbours, but e.g. the corners only have 3.
      * @param y The Y coordinate
      * @param x The X coordinate
      */
@@ -87,10 +93,22 @@ public class Board {
         return neighbours;
     }
 
+    /**
+     * For a given square, returns a list containing all of its neighbours.
+     * @see Board#getNeighbours(int, int)
+     * @param s The square to reveal
+     * @return
+     */
     public ArrayList<Square> getNeighbours(Square s) {
         return getNeighbours(s.y, s.x);
     }
 
+    /**
+     * For a given square, returns a list containing the number of flagged
+     * neighbours it has.
+     * @param s The square to count the flagged neighbours of
+     * @return The number of flagged neighbours (0–8)
+     */
     public int numFlaggedNeighbours(Square s) {
         return getNeighbours(s).stream().reduce(
             0,
@@ -100,7 +118,7 @@ public class Board {
         );
     }
 
-    public Square[][] getGrid() {
+    public Square[][] getRawGrid() {
         return this.grid;
     }
 

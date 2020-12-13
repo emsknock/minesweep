@@ -29,7 +29,7 @@ public class MinesweepUI extends Application {
         grid.setHgap(2);
         grid.setVgap(2);
 
-        for (Square[] row : board.getGrid()) {
+        for (Square[] row : board.getRawGrid()) {
             for (Square square : row) {
 
                 Node squareNode = new SquareUI(board, square, grid);
