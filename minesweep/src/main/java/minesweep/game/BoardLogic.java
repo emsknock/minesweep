@@ -2,10 +2,6 @@ package minesweep.game;
 
 public class BoardLogic {
 
-    // The position differences of a given square to its neighbours
-    private static final int[][] NEIGHBOUR_DELTAS = { { -1, -1 }, { -1, 0 }, { -1, 1 }, { 0, -1 }, { 0, 1 }, { 1, -1 },
-            { 1, 0 }, { 1, 1 }, };
-
     Board b;
 
     BoardLogic(Board b) {
@@ -53,6 +49,10 @@ public class BoardLogic {
             return false;
         }
 
+    }
+
+    public boolean reveal(Square guess) {
+        return reveal(guess.y, guess.x);
     }
 
 }
