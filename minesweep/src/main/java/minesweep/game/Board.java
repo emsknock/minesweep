@@ -23,7 +23,7 @@ public class Board {
 
     private int gridW;
     private int gridH;
-    protected boolean areMinesPlaced = false;
+    protected int guessCount = 0;
 
     private Square[][] grid;
 
@@ -44,7 +44,7 @@ public class Board {
      * Sets the grid to contain only "0" squares
      */
     public void clearBoard() {
-        this.areMinesPlaced = false;
+        this.guessCount = 0;
         this.grid = new Square[gridH][gridW];
         for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
             this.grid[rowIdx] = new Square[gridW];
