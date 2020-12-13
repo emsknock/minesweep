@@ -1,7 +1,6 @@
 package minesweep.game;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * The Board class keeps track of a nxm grid of Squares, generates a valid
