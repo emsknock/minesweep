@@ -57,13 +57,7 @@ public class BoardLogic {
     }
 
     public boolean reveal(Square guess) {
-        try {
-            return reveal(guess.y, guess.x);
-        } catch (StackOverflowError e) {
-            e.printStackTrace();
-            System.exit(1);
-            return true;
-        }
+        return reveal(guess.y, guess.x);
     }
 
     public boolean guess(Square guess) {
@@ -99,13 +93,8 @@ public class BoardLogic {
         int numMinesPlaced = 0;
         while(numMinesPlaced != mineCount) {
 
-            System.out.println("Placed mines so far: " + numMinesPlaced);
-            
             int y = rng.nextInt(board.height);
             int x = rng.nextInt(board.width);
-
-            System.out.println("Trying to place mine at " + x + ":" + y);
-
             Square potentialMine = board.getSquare(y, x);
 
             if (
@@ -119,7 +108,6 @@ public class BoardLogic {
                     .allMatch(neighbour -> neighbour.y != avoidY && neighbour.x != avoidX)
             ) {
                 // All of the above predicates passed; we can place a mine here
-                System.out.println("Mine placement successful");
                 potentialMine.isMine = true;
                 numMinesPlaced++;
                 for (Square neighbour : board.getNeighbours(potentialMine)) {
@@ -128,8 +116,6 @@ public class BoardLogic {
             }
 
         }
-        System.out.println("Mines placed!");
-        System.out.println(board);
     }
 
 }

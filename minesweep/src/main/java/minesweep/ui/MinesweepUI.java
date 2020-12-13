@@ -19,8 +19,6 @@ public class MinesweepUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        System.out.println(board.toString());
-
         StatusUI status = new StatusUI(board);
 
         VBox mainPane = new VBox();
