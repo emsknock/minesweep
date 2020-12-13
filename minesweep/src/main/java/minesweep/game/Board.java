@@ -23,7 +23,9 @@ public class Board {
 
     protected int height;
     protected int width;
+    
     protected int guessCount = 0;
+    protected int flagCount = 0;
 
     private Square[][] grid;
 
@@ -133,6 +135,7 @@ public class Board {
      * @return The new state of flagging
      */
     public boolean toggleFlag(Square s) {
+        flagCount += s.isFlagged ? -1 : 1;
         s.isFlagged = !s.isFlagged;
         return s.isFlagged;
     }

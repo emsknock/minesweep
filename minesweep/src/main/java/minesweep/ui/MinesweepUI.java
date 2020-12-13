@@ -21,6 +21,8 @@ public class MinesweepUI extends Application {
 
         System.out.println(board.toString());
 
+        StatusUI status = new StatusUI(board);
+
         VBox mainPane = new VBox();
         mainPane.setPadding(new Insets(WINDOW_PADDING));
 
@@ -31,7 +33,7 @@ public class MinesweepUI extends Application {
         for (Square[] row : board.getRawGrid()) {
             for (Square square : row) {
 
-                Node squareNode = new SquareUI(board, square, grid);
+                Node squareNode = new SquareUI(board, square, grid, status);
 
                 grid.add(
                     squareNode,
@@ -42,7 +44,7 @@ public class MinesweepUI extends Application {
             }
         }
 
-        mainPane.getChildren().add(grid);
+        mainPane.getChildren().addAll(grid, status);
 
         Scene mainScene = new Scene(mainPane);
 

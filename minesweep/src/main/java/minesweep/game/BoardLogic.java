@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class BoardLogic {
 
-    Board board;
-    Random rng;
-    int mineCount;
+    private Board board;
+    private Random rng;
+    private int mineCount;
 
     public BoardLogic(int height, int width, int mineCount, long randSeed) {
         this.board = new Board(height, width);
@@ -85,6 +85,14 @@ public class BoardLogic {
 
     public Square[][] getRawGrid() {
         return board.getRawGrid();
+    }
+
+    public int getGuessCount() {
+        return board.guessCount;
+    }
+
+    public int getFlagCount() {
+        return board.flagCount;
     }
 
     public void placeMines(int avoidY, int avoidX) {
