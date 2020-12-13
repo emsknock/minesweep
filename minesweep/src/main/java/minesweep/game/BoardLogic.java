@@ -1,5 +1,7 @@
 package minesweep.game;
 
+import java.util.Random;
+
 public class BoardLogic {
 
     Board b;
@@ -53,6 +55,39 @@ public class BoardLogic {
 
     public boolean reveal(Square guess) {
         return reveal(guess.y, guess.x);
+    }
+
+    public void placeMines(int numMinesToPlace, int avoidX, int avoidY, long randSeed) {
+
+        Random rng = new Random(randSeed);
+
+        int numMinesPlaced = 0;
+        while(numMinesPlaced != numMinesToPlace) {
+            
+            int y = rng.nextInt();
+            int x = rng.nextInt();
+            Square potentialMine = b.getSquare(y, x);
+
+            if (
+                // Cannot place on top of existing one:
+                !potentialMine.isMine ||
+                // Cannot place in the first clicked square:
+                !(y == avoidY && x == avoidX) ||
+                // Cannot place to any of the first clicked square's neighbours:
+                !b.getNeighbours(potentialMine)
+                    .stream()
+                    .anyMatch(neighbour -> neighbour.y == avoidY && neighbour.x == avoidX)
+            ) {
+                // All of the above predicates passed; we can place a mine here
+                potentialMine.isMine = true;
+                numMinesPlaced++;
+                for (Square neighbour : b.getNeighbours(potentialMine)) {
+                    neighbour.mineNeighbours++;
+                }
+            }
+
+        }
+
     }
 
 }

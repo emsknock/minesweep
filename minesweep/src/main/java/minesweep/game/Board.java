@@ -23,28 +23,20 @@ public class Board {
 
     private int gridW;
     private int gridH;
-    private int mineCount;
-    private Random rng;
+    protected boolean areMinesPlaced = false;
 
     private Square[][] grid;
 
-    public Board(int height, int width, int mineCount, long randSeed) {
-
-        this.rng = new Random(randSeed);
+    public Board(int height, int width) {
 
         this.gridH = height;
         this.gridW = width;
-        this.mineCount = mineCount;
 
-        if (height == 0 || width == 0) {
-            throw new IllegalArgumentException("Cannot create board with width or height of 0");
-        }
-        if (mineCount > height * width) {
-            throw new IllegalArgumentException("Cannot place " + mineCount + " mines on a " + height + "x" + width + "board");
+        if (height < 1 || width < 1) {
+            throw new IllegalArgumentException("Board width and height must both be at least 1");
         }
 
         clearBoard();
-        placeMines();
 
     }
 
@@ -52,39 +44,13 @@ public class Board {
      * Sets the grid to contain only "0" squares
      */
     public void clearBoard() {
+        this.areMinesPlaced = false;
         this.grid = new Square[gridH][gridW];
         for (int rowIdx = 0; rowIdx < gridH; rowIdx++) {
             this.grid[rowIdx] = new Square[gridW];
             for (int colIdx = 0; colIdx < gridW; colIdx++) {
                 this.grid[rowIdx][colIdx] = new Square(rowIdx, colIdx);
             }
-        }
-    }
-
-    /**
-     * Places the amount of mines given in the constructor to the board.
-     * 
-     * Note: Assumes the board only contains "0" squares and no mines beforehand
-     */
-    public void placeMines() {
-        int placedMines = 0;
-        while (placedMines != mineCount) {
-
-            int rowIdx = rng.nextInt(gridH);
-            int colIdx = rng.nextInt(gridW);
-            Square sq = this.grid[rowIdx][colIdx];
-
-            if (sq.isMine) {
-                continue;
-            }
-
-            sq.isMine = true;
-            placedMines++;
-
-            for (Square neighbour : this.getNeighbours(rowIdx, colIdx)) {
-                neighbour.mineNeighbours++;
-            }
-
         }
     }
 
@@ -96,6 +62,10 @@ public class Board {
      */
     public boolean isInBounds(int y, int x) {
         return y >= 0 && y < this.gridH && x >= 0 && x < this.gridW;
+    }
+
+    public Square getSquare(int y, int x) {
+        return this.grid[y][x];
     }
 
     /**
@@ -117,50 +87,17 @@ public class Board {
         return neighbours;
     }
 
-    /**
-     * Reveal the square at the given coordinates. If the square is a "0", will
-     * continue recursively revealing all of its neighbours, until no "0" squares
-     * remain.
-     * 
-     * @param y The Y coordinate
-     * @param x The X coordinate
-     * @return `true` iff the revealed square was a mine
-     */
-    public boolean reveal(int y, int x) {
-
-        Square guessedSquare = this.grid[y][x];
-
-        if (guessedSquare.isRevealed) {
-            return false;
-        }
-
-        guessedSquare.isRevealed = true;
-
-        if (guessedSquare.isMine) {
-            return true;
-        }
-        if (guessedSquare.mineNeighbours > 0) {
-            return false;
-        }
-
-        for (Square neighbour : this.getNeighbours(y, x)) {
-            reveal(neighbour);
-        }
-
-        return false;
-
+    public ArrayList<Square> getNeighbours(Square s) {
+        return getNeighbours(s.y, s.x);
     }
 
-    /**
-     * Reveal the given square with the same recursion as the coordinate-based
-     * reveal method.
-     * 
-     * @see minesweep.game.Board#reveal(int, int) The coordinate based reveal
-     * @param guess The guessed square object
-     * @return `true` iff the revealed square was a mine
-     */
-    public boolean reveal(Square guess) {
-        return this.reveal(guess.y, guess.x);
+    public int numFlaggedNeighbours(Square s) {
+        return getNeighbours(s).stream().reduce(
+            0,
+            (flaggedNeighbours, neighbour) ->
+                flaggedNeighbours + (neighbour.isFlagged ? 1 : 0),
+            Integer::sum
+        );
     }
 
     public Square[][] getGrid() {
