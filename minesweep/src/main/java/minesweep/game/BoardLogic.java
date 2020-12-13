@@ -61,6 +61,9 @@ public class BoardLogic {
     }
 
     public boolean guess(Square guess) {
+        if (guess.isFlagged) {
+            return false;
+        }
         if (board.guessCount == 0) {
             placeMines(guess.y, guess.x);
         }
