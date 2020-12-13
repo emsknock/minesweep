@@ -49,6 +49,14 @@ public class SquareUI extends StackPane {
     public void update() {
         this.getChildren().clear();
 
+        setStyle(
+            "-fx-cursor:" + (
+                (s.isRevealed || s.isFlagged) && s.mineNeighbours < 1
+                    ? "default"
+                    : "hand"
+            )
+        );
+
         Rectangle box = new Rectangle(SQUARE_SIZE, SQUARE_SIZE);
 
         Label text;
