@@ -28,6 +28,8 @@ public class Board {
     protected int flagCount = 0;
     protected int mineCount = 0;
 
+    protected boolean hasHitMine = false;
+
     protected Square[][] grid;
 
     /**

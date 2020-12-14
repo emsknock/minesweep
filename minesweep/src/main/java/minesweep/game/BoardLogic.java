@@ -44,6 +44,7 @@ public class BoardLogic {
             guess.isRevealed = true;
 
             if (guess.isMine) {
+                board.hasHitMine = true;
                 return true;
             }
 
@@ -135,6 +136,10 @@ public class BoardLogic {
             }
         }
         return true;
+    }
+
+    public boolean isGameLost() {
+        return board.hasHitMine;
     }
 
     public void placeMines(int avoidY, int avoidX) {
