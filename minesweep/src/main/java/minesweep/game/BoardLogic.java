@@ -9,6 +9,9 @@ public class BoardLogic {
     private int mineCount;
 
     public BoardLogic(int height, int width, int mineCount, long randSeed) {
+        if (mineCount >= height * width) {
+            throw new IllegalArgumentException("Illegal amount of mines: must leave at least one blank square");
+        }
         this.board = new Board(height, width);
         this.rng = new Random(randSeed);
         this.mineCount = mineCount;

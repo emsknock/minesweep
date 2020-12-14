@@ -19,7 +19,7 @@ public class LoseWinUI extends VBox {
 
     public void update() {
 
-        if(!b.isGameWon()) {
+        if(!b.isGameWon() && !b.isGameLost()) {
             setVisible(false);
             return;
         }
@@ -37,7 +37,7 @@ public class LoseWinUI extends VBox {
         setPadding(new Insets(60));
         setStyle("-fx-background-color: #FFFFFFEE");
 
-        Label outcome = new Label("You won!");
+        Label outcome = new Label(b.isGameWon() ? "You won!" : "You lost...");
         outcome.setStyle("-fx-font-size: 36px");
 
         getChildren().add(outcome);
