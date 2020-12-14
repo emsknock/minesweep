@@ -130,18 +130,6 @@ public class Board {
     }
 
     /**
-     * Toggles wether the given square is flagged or not.
-     * Doesn't check wether the square is revealed or not.
-     * @param s The square to flag or unflag
-     * @return The new state of flagging
-     */
-    public boolean toggleFlag(Square s) {
-        flagCount += s.isFlagged ? -1 : 1;
-        s.isFlagged = !s.isFlagged;
-        return s.isFlagged;
-    }
-
-    /**
      * Returns a reference to the Square[y][x] array that represents the board
      * @return A 2d array of Squares with [y][x] order
      */

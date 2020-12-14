@@ -73,12 +73,15 @@ public class BoardLogic {
     }
 
     /**
-     * @see Board#toggleFlag(Square)
-     * @param s The square to flag
+     * Toggles wether the given square is flagged or not.
+     * Doesn't check wether the square is revealed or not.
+     * @param s The square to flag or unflag
      * @return The new state of flagging
      */
     public boolean toggleFlag(Square s) {
-        return board.toggleFlag(s);
+        board.flagCount += s.isFlagged ? -1 : 1;
+        s.isFlagged = !s.isFlagged;
+        return s.isFlagged;
     }
 
     public Square[][] getRawGrid() {
