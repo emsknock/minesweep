@@ -114,6 +114,7 @@ public class BoardLogic {
                 // All of the above predicates passed; we can place a mine here
                 potentialMine.isMine = true;
                 numMinesPlaced++;
+                board.mineCount++;
                 for (Square neighbour : board.getNeighbours(potentialMine)) {
                     neighbour.mineNeighbours++;
                 }

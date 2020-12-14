@@ -26,6 +26,7 @@ public class Board {
     
     protected int guessCount = 0;
     protected int flagCount = 0;
+    protected int mineCount = 0;
 
     private Square[][] grid;
 
