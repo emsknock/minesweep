@@ -2,9 +2,11 @@ package minesweep.ui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -19,11 +21,13 @@ public class MinesweepUI extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        StatusUI status = new StatusUI(board);
-
         VBox mainPane = new VBox();
         mainPane.setPadding(new Insets(WINDOW_PADDING));
 
+        StatusUI status = new StatusUI(board);
+        LoseWinUI loseWinScreen = new LoseWinUI(board);
+        
+        StackPane gameArea = new StackPane();
         GridPane grid = new GridPane();
         grid.setHgap(2);
         grid.setVgap(2);
@@ -31,7 +35,7 @@ public class MinesweepUI extends Application {
         for (Square[] row : board.getRawGrid()) {
             for (Square square : row) {
 
-                Node squareNode = new SquareUI(board, square, grid, status);
+                Node squareNode = new SquareUI(board, square, grid, status, loseWinScreen);
 
                 grid.add(
                     squareNode,
@@ -42,7 +46,11 @@ public class MinesweepUI extends Application {
             }
         }
 
-        mainPane.getChildren().addAll(grid, status);
+        StackPane.setAlignment(loseWinScreen, Pos.CENTER);
+        gameArea.setPrefSize(30 * SquareUI.SQUARE_SIZE, 16 * SquareUI.SQUARE_SIZE);
+        gameArea.getChildren().addAll(grid, loseWinScreen);
+
+        mainPane.getChildren().addAll(gameArea, status);
 
         Scene mainScene = new Scene(mainPane);
 
@@ -54,7 +62,7 @@ public class MinesweepUI extends Application {
     }
 
     public static void main(String[] args) {
-        board = new BoardLogic(16, 30, 99, System.currentTimeMillis());
+        board = new BoardLogic(16, 16, 10, System.currentTimeMillis());
         launch(args);
     }
 

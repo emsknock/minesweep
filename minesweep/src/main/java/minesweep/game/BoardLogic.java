@@ -61,10 +61,23 @@ public class BoardLogic {
     }
 
     public boolean guess(Square guess) {
+        // The first guess should place the mines so that we avoid placing
+        // any mines near it
         if (board.guessCount == 0) {
             placeMines(guess.y, guess.x);
         }
-        if (guess.isFlagged) {
+        if (
+            // Clicking flagged squares should be ignored
+            guess.isFlagged ||
+            // Clicking revealed "0" squares should be ignored
+            (guess.isRevealed && guess.mineNeighbours == 0) ||
+            // Clicking revealed squares over zero should only be ignored
+            // when their neighbours are all revealed or already flagged,
+            // i.e. there's nothing to reveal anymore
+            guess.isRevealed && board.getNeighbours(guess)
+                .stream()
+                .allMatch(neighbour -> neighbour.isRevealed || neighbour.isFlagged)
+        ) {
             return false;
         } else {
             board.guessCount++;
@@ -76,9 +89,12 @@ public class BoardLogic {
      * Toggles wether the given square is flagged or not.
      * Doesn't check wether the square is revealed or not.
      * @param s The square to flag or unflag
-     * @return The new state of flagging
+     * @return The new state of flagging or false if the square is revealed already
      */
     public boolean toggleFlag(Square s) {
+        if (s.isRevealed) {
+            return false;
+        }
         board.flagCount += s.isFlagged ? -1 : 1;
         s.isFlagged = !s.isFlagged;
         return s.isFlagged;
@@ -105,7 +121,7 @@ public class BoardLogic {
     }
 
     public boolean isGameWon() {
-        if (getFlagCount() != getMineCount()) {
+        if (getGuessCount() < 1 || getFlagCount() != getMineCount()) {
             return false;
         }
         // All mines have to be flagged and all safe squares must be unflagged

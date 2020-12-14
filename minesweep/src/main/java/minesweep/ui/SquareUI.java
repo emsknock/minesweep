@@ -26,7 +26,7 @@ public class SquareUI extends StackPane {
 
     private Square s;
 
-    public SquareUI(BoardLogic b, Square s, GridPane gr, StatusUI st) {
+    public SquareUI(BoardLogic b, Square s, GridPane gr, StatusUI st, LoseWinUI lw) {
         
         this.s = s;
 
@@ -34,11 +34,11 @@ public class SquareUI extends StackPane {
             if (e.getButton() == MouseButton.PRIMARY) {
                 b.guess(s);
                 gr.getChildren().forEach(child -> { ((SquareUI) child).update(); });
-                st.update();
             } else {
                 b.toggleFlag(s);
-                st.update();
             }
+            st.update();
+            lw.update();
             update();
         });
 
