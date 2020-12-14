@@ -97,6 +97,24 @@ public class BoardLogic {
         return board.mineCount;
     }
 
+    public boolean isGameWon() {
+        if (getFlagCount() != getMineCount()) {
+            return false;
+        }
+        // All mines have to be flagged and all safe squares must be unflagged
+        for (Square[] row : getRawGrid()) {
+            for (Square col : row) {
+                if (col.isMine && !col.isFlagged) {
+                    return false;
+                }
+                if (!col.isMine && col.isFlagged) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void placeMines(int avoidY, int avoidX) {
         int numMinesPlaced = 0;
         while(numMinesPlaced != mineCount) {
