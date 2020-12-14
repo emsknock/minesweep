@@ -79,10 +79,9 @@ public class BoardLogic {
                 .allMatch(neighbour -> neighbour.isRevealed || neighbour.isFlagged)
         ) {
             return false;
-        } else {
-            board.guessCount++;
-            return reveal(guess);
         }
+        board.guessCount++;
+        return reveal(guess);
     }
 
     /**
