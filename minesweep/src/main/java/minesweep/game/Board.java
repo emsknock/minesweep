@@ -28,7 +28,7 @@ public class Board {
     protected int flagCount = 0;
     protected int mineCount = 0;
 
-    private Square[][] grid;
+    protected Square[][] grid;
 
     /**
      * Create a new board with the given height and width and with all squares
@@ -127,14 +127,6 @@ public class Board {
                     flaggedNeighbours + (neighbour.isFlagged ? 1 : 0),
                 Integer::sum
             );
-    }
-
-    /**
-     * Returns a reference to the Square[y][x] array that represents the board
-     * @return A 2d array of Squares with [y][x] order
-     */
-    public Square[][] getRawGrid() {
-        return this.grid;
     }
 
 }

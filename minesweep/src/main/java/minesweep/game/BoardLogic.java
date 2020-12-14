@@ -84,8 +84,12 @@ public class BoardLogic {
         return s.isFlagged;
     }
 
+    /**
+     * Returns a reference to the Square[y][x] array that represents the board
+     * @return A 2d array of Squares with [y][x] order
+     */
     public Square[][] getRawGrid() {
-        return board.getRawGrid();
+        return board.grid;
     }
 
     public int getGuessCount() {
