@@ -1,19 +1,29 @@
 package minesweep.ui;
 
+import java.io.File;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import minesweep.dao.ImportExport;
 import minesweep.game.*;
 
 public class MinesweepUI extends Application {
@@ -68,10 +78,14 @@ public class MinesweepUI extends Application {
                 int height = Integer.valueOf(heightField.getText());
                 int mines = Integer.valueOf(minesField.getText());
                 MinesweepUI.board = new BoardLogic(height, width, mines, System.currentTimeMillis());
-                start(primaryStage);
+                update(primaryStage);
             } catch (NumberFormatException ex) {
+                Alert errorAlert = new Alert(AlertType.ERROR, "One or more variable not allowed: width and height must both be over zero, and mine amount must be less than (width * height - 9)", ButtonType.OK);
+                errorAlert.showAndWait();
                 return;
             } catch (Exception ex) {
+                Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't start game: " + ex.getMessage(), ButtonType.OK);
+                errorAlert.showAndWait();
                 return;
             }
         });
@@ -86,9 +100,45 @@ public class MinesweepUI extends Application {
             newGameButton
         );
 
-        mainPane.getChildren().addAll(gameArea, status, newGameArea);
+        Menu fileMenu = new Menu("File");
+        MenuItem saveMenuItem = new MenuItem("Save game");
+        MenuItem loadMenuItem = new MenuItem("Load game");
+        fileMenu.getItems().addAll(saveMenuItem, loadMenuItem);
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(fileMenu);
+
+        saveMenuItem.addEventHandler(ActionEvent.ACTION, ev -> {
+            FileChooser fileChooser = new FileChooser();
+            File selectedFile = fileChooser.showSaveDialog(primaryStage);
+            try {
+                ImportExport.exportGame(board, selectedFile);
+            } catch (IOException ex) {
+                Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't save game file: " + ex.getMessage(), ButtonType.OK);
+                errorAlert.showAndWait();
+            }
+        });
+        loadMenuItem.addEventHandler(ActionEvent.ACTION, ev -> {
+            FileChooser fileChooser = new FileChooser();
+            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+            try {
+                BoardLogic imported = ImportExport.importGame(selectedFile);
+                MinesweepUI.board = imported;
+                System.out.println("Loading");
+                update(primaryStage);
+            } catch (IOException ex) {
+                Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't load game file: " + ex.getMessage(), ButtonType.OK);
+                errorAlert.showAndWait();
+            }
+            // } catch (Exception ex) {
+            //     Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't run loaded game: " + ex.getMessage(), ButtonType.OK);
+            //     errorAlert.showAndWait();
+            // }
+        });
+
+        mainPane.getChildren().addAll(menuBar, gameArea, status, newGameArea);
 
         Scene mainScene = new Scene(mainPane);
+
 
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(2 * WINDOW_PADDING + board.getRawGrid()[0].length * SquareUI.SQUARE_SIZE);

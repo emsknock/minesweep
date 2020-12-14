@@ -23,15 +23,18 @@ public class ImportExport {
             }
             data.add((byte) 0xff);
         }
+        data.add((byte) board.getGuessCount());
 
         FileUtils.writeByteArrayToFile(
             file,
-            // WriteByteArrayToFile want's byte[] instead of Byte[], so we have
-            // to use ArrayUtils to turn the Byte[] into byte[] — of course
-            // ArrayUtils returns an Object instead of byte[], so we also need
-            // to explicitly cast it into byte[] to appease Javas never ending
-            // lust to make the programmers life total misery
-            (byte[]) ArrayUtils.toPrimitive(data.toArray())
+            // ArrayList.toArray doesn't return a Byte[] but Object[] instead
+            // unless we explicitly point it to a Byte[] — I guess it's too
+            // stupid to infer the array type. Because that's not enough rage-
+            // inducing enough, writeByteArrayToFile doesn't accept a Byte[]
+            // but demands a byte[]. Thus we also need to convert Byte[] to
+            // byte[] using ArrayUtils to appease Java's lust to make the
+            // programmer's life miserable
+            ArrayUtils.toPrimitive(data.toArray(new Byte[data.size()]))
         );
 
         return true;
@@ -41,13 +44,15 @@ public class ImportExport {
     public static BoardLogic importGame(File file) throws IOException {
         
         byte[] readData = FileUtils.readFileToByteArray(file);
+        byte[] gridData = ArrayUtils.subarray(readData, 0, readData.length - 1);
+        int guessCount = readData[readData.length - 1];
 
         int height = 0;
         int width = 0;
-        for (byte b : readData) {
+        for (byte b : gridData) {
             if (b == (byte) 0xff) {
                 height++;
-            } else {
+            } else if (height == 0) {
                 width++;
             }
         }
@@ -56,20 +61,22 @@ public class ImportExport {
         int mineCount = 0;
         int y = 0;
         int x = 0;
-        for (byte b : readData) {
+        for (byte b : gridData) {
             if (b == (byte) 0xff) {
                 y++;
                 x = 0;
             } else {
                 Square deserialised = Square.deserialise(b, y, x);
                 grid[y][x] = deserialised;
+                x++;
                 if (deserialised.isMine) {
                     mineCount++;
                 }
             }
         }
-
+        
         BoardLogic output = new BoardLogic(height, width, mineCount, 1L);
+        output.setGuessCount(guessCount);
         output.setRawGrid(grid);
 
         return output;

@@ -119,8 +119,16 @@ public class BoardLogic {
         return board.guessCount;
     }
 
+    public void setGuessCount(int guessCount) {
+        board.guessCount = guessCount;
+    }
+
     public int getFlagCount() {
         return board.flagCount;
+    }
+
+    public void setFlagCount(int flagCount) {
+        board.flagCount = flagCount;
     }
 
     public int getMineCount() {

@@ -29,6 +29,7 @@ public class Square {
         out.isMine = ((serialised >> 4) & 1) == 1;
         out.isFlagged = ((serialised >> 5) & 1) == 1;
         out.isRevealed = ((serialised >> 6) & 1) == 1;
+        out.mineNeighbours = serialised & 0b1111;
         return out;
     }
 
