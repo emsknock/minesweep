@@ -111,6 +111,10 @@ public class BoardLogic {
         return board.grid;
     }
 
+    public void setRawGrid(Square[][] newGrid) {
+        board.grid = newGrid;
+    }
+
     public int getGuessCount() {
         return board.guessCount;
     }
@@ -121,6 +125,14 @@ public class BoardLogic {
 
     public int getMineCount() {
         return board.mineCount;
+    }
+
+    public int getBoardWidth() {
+        return board.grid[0].length;
+    }
+
+    public int getBoardHeight() {
+        return board.grid.length;
     }
 
     public boolean isGameWon() {
