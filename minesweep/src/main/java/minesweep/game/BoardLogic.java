@@ -93,6 +93,10 @@ public class BoardLogic {
         return board.flagCount;
     }
 
+    public int getMineCount() {
+        return board.mineCount;
+    }
+
     public void placeMines(int avoidY, int avoidX) {
         int numMinesPlaced = 0;
         while(numMinesPlaced != mineCount) {
