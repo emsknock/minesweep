@@ -17,10 +17,7 @@ public class BoardLogic {
         this.mineCount = mineCount;
     }
 
-    private boolean reveal(int y, int x) {
-
-        Square guessedSquare = board.getSquare(y, x);
-
+    private boolean reveal(Square guessedSquare) {
         if (guessedSquare.isRevealed) {
             // Revealing an already revealed square should reveal all its
             // neighbours, but only if the player has flagged the correct
@@ -57,11 +54,10 @@ public class BoardLogic {
 
             return false;
         }
-
     }
 
-    private boolean reveal(Square guessedSquare) {
-        return reveal(guessedSquare.y, guessedSquare.x);
+    private boolean reveal(int y, int x) {
+        return reveal(board.getSquare(y, x));
     }
 
     public boolean guess(int y, int x) {
@@ -110,6 +106,10 @@ public class BoardLogic {
         board.flagCount += s.isFlagged ? -1 : 1;
         s.isFlagged = !s.isFlagged;
         return s.isFlagged;
+    }
+
+    public boolean toggleFlag(int y, int x) {
+        return toggleFlag(board.getSquare(y, x));
     }
 
     /**
@@ -202,6 +202,23 @@ public class BoardLogic {
             }
 
         }
+    }
+
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (Square[] row : getRawGrid()) {
+            for (Square col : row) {
+                if (col.isRevealed) {
+                    output.append(col.isMine ? "X" : col.mineNeighbours);
+                } else if (col.isFlagged) {
+                    output.append("F");
+                } else {
+                    output.append("#");
+                }
+            }
+            output.append("\n");
+        }
+        return output.toString();
     }
 
 }
