@@ -59,6 +59,7 @@ public class ImportExport {
 
         Square[][] grid = new Square[height][width];
         int mineCount = 0;
+        int flagCount = 0;
         int y = 0;
         int x = 0;
         for (byte b : gridData) {
@@ -72,11 +73,15 @@ public class ImportExport {
                 if (deserialised.isMine) {
                     mineCount++;
                 }
+                if (deserialised.isFlagged) {
+                    flagCount++;
+                }
             }
         }
         
         BoardLogic output = new BoardLogic(height, width, mineCount, 1L);
         output.setGuessCount(guessCount);
+        output.setFlagCount(flagCount);
         output.setRawGrid(grid);
 
         return output;
