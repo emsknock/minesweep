@@ -56,10 +56,6 @@ public class BoardLogic {
         }
     }
 
-    private boolean reveal(int y, int x) {
-        return reveal(board.getSquare(y, x));
-    }
-
     public boolean guess(int y, int x) {
 
         Square guessedSquare = board.getSquare(y, x);
@@ -199,23 +195,6 @@ public class BoardLogic {
             }
 
         }
-    }
-
-    public String toString() {
-        StringBuilder output = new StringBuilder();
-        for (Square[] row : getRawGrid()) {
-            for (Square col : row) {
-                if (col.isRevealed) {
-                    output.append(col.isMine ? "X" : col.mineNeighbours);
-                } else if (col.isFlagged) {
-                    output.append("F");
-                } else {
-                    output.append("#");
-                }
-            }
-            output.append("\n");
-        }
-        return output.toString();
     }
 
 }
