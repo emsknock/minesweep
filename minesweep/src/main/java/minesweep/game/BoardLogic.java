@@ -17,7 +17,7 @@ public class BoardLogic {
         this.mineCount = mineCount;
     }
 
-    public boolean reveal(int y, int x) {
+    private boolean reveal(int y, int x) {
 
         Square guessedSquare = board.getSquare(y, x);
 
@@ -60,7 +60,7 @@ public class BoardLogic {
 
     }
 
-    public boolean reveal(Square guessedSquare) {
+    private boolean reveal(Square guessedSquare) {
         return reveal(guessedSquare.y, guessedSquare.x);
     }
 
