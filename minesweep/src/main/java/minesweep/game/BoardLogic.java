@@ -19,13 +19,13 @@ public class BoardLogic {
 
     public boolean reveal(int y, int x) {
 
-        Square guess = board.getSquare(y, x);
+        Square guessedSquare = board.getSquare(y, x);
 
-        if (guess.isRevealed) {
+        if (guessedSquare.isRevealed) {
             // Revealing an already revealed square should reveal all its
             // neighbours, but only if the player has flagged the correct
             // amount of neighbours.
-            if (board.numFlaggedNeighbours(guess) != guess.mineNeighbours) {
+            if (board.numFlaggedNeighbours(guessedSquare) != guessedSquare.mineNeighbours) {
                 // Since there's a wrong amount of flagged neighbours,
                 // this reveal call should just be ignored
                 return false;
@@ -35,7 +35,7 @@ public class BoardLogic {
                 // possible that this will reveal a mine — thus we return
                 // true if any of the neighbour reveals returns true
                 // (i.e. a mine is revealed)
-                return board.getNeighbours(guess)
+                return board.getNeighbours(guessedSquare)
                     .stream()
                     .filter(neighbour -> !neighbour.isRevealed && !neighbour.isFlagged)
                     .anyMatch(this::reveal);
@@ -44,15 +44,15 @@ public class BoardLogic {
             // Revealing an unrevealed "0" should immediately reveal all
             // its unrevealed neighbours. Any neighbouring 0's will then
             // reveal all their unrevealed neighbours and so on.
-            guess.isRevealed = true;
+            guessedSquare.isRevealed = true;
 
-            if (guess.isMine) {
+            if (guessedSquare.isMine) {
                 board.hasHitMine = true;
                 return true;
             }
 
-            if (guess.mineNeighbours == 0) {
-                board.getNeighbours(guess).stream().forEach(this::reveal);
+            if (guessedSquare.mineNeighbours == 0) {
+                board.getNeighbours(guessedSquare).stream().forEach(this::reveal);
             }
 
             return false;
@@ -60,32 +60,41 @@ public class BoardLogic {
 
     }
 
-    public boolean reveal(Square guess) {
-        return reveal(guess.y, guess.x);
+    public boolean reveal(Square guessedSquare) {
+        return reveal(guessedSquare.y, guessedSquare.x);
     }
 
-    public boolean guess(Square guess) {
+    public boolean guess(int y, int x) {
+
+        Square guessedSquare = board.getSquare(y, x);
+
         // The first guess should place the mines so that we avoid placing
         // any mines near it
         if (board.guessCount == 0) {
-            placeMines(guess.y, guess.x);
+            placeMines(y, x);
         }
         if (
             // Clicking flagged squares should be ignored
-            guess.isFlagged ||
+            guessedSquare.isFlagged ||
             // Clicking revealed "0" squares should be ignored
-            (guess.isRevealed && guess.mineNeighbours == 0) ||
+            (guessedSquare.isRevealed && guessedSquare.mineNeighbours == 0) ||
             // Clicking revealed squares over zero should only be ignored
             // when their neighbours are all revealed or already flagged,
             // i.e. there's nothing to reveal anymore
-            guess.isRevealed && board.getNeighbours(guess)
+            guessedSquare.isRevealed && board.getNeighbours(guessedSquare)
                 .stream()
                 .allMatch(neighbour -> neighbour.isRevealed || neighbour.isFlagged)
         ) {
             return false;
         }
+        
         board.guessCount++;
-        return reveal(guess);
+        return reveal(guessedSquare);
+
+    }
+
+    public boolean guess(Square guessedSquare) {
+        return guess(guessedSquare);
     }
 
     /**
