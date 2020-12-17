@@ -2,9 +2,9 @@ package minesweep.game;
 
 public class Square {
 
-    public boolean isMine = false;
-    public boolean isFlagged = false;
     public boolean isRevealed = false;
+    public boolean isFlagged = false;
+    public boolean isMine = false;
     public int mineNeighbours = 0;
 
     public int y = 0;
@@ -17,9 +17,9 @@ public class Square {
 
     public byte serialise() {
         return (byte) (
-            (isMine ? 1 : 0) << 4 |
-            (isFlagged ? 1 : 0) << 5 |
             (isRevealed ? 1 : 0) << 6 |
+            (isFlagged ? 1 : 0) << 5 |
+            (isMine ? 1 : 0) << 4 |
             mineNeighbours
         );
     }
