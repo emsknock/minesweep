@@ -90,7 +90,7 @@ public class BoardLogic {
     }
 
     public boolean guess(Square guessedSquare) {
-        return guess(guessedSquare);
+        return guess(guessedSquare.y, guessedSquare.x);
     }
 
     /**
