@@ -159,10 +159,7 @@ public class BoardLogic {
         // All mines have to be flagged and all safe squares must be unflagged
         for (Square[] row : getRawGrid()) {
             for (Square col : row) {
-                if (col.isMine && !col.isFlagged) {
-                    return false;
-                }
-                if (!col.isMine && col.isFlagged) {
+                if ((col.isMine && !col.isFlagged) || (!col.isMine && col.isFlagged)) {
                     return false;
                 }
             }
