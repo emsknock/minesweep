@@ -33,4 +33,23 @@ public class Square {
         return out;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Square)) {
+            return false;
+        }
+        Square c = (Square) o;
+        return (
+            c.isMine == isMine &&
+            c.isFlagged == isFlagged &&
+            c.isRevealed == isRevealed &&
+            c.mineNeighbours == mineNeighbours &&
+            c.y == y &&
+            c.x == x
+        );
+    }
+
 }
