@@ -6,6 +6,10 @@
 | 17.11. | 1     | Fought with NetBeans to create maven project                       |
 | 17.11. | 2     | Struggled to create an executable project and to get JUnit working |
 | 24.11. | 2     | Wrote code to generate a valid board and added tests for it        |
-| 01.12  | 2     | Added reveal method, groundwork for UI, and JAR generation         |
-| 08.12  | 2     | Created initial GUI                                                |
-| Total  | 13    |                                                                    |
+| 01.12. | 2     | Added reveal method, groundwork for UI, and JAR generation         |
+| 08.12. | 2     | Created initial GUI                                                |
+| 13.12. | 3     | Polished the GUI                                                   |
+| 14.12. | 6     | Refactoring code and added the Import/Export functionality         |
+| 17.12. | 3     | Refactored some more and wrote tests to match refactored code      |
+| 18.12. | 1     | Added tests for Import/Export                                      |
+| Total  | 26    |                                                                    |
