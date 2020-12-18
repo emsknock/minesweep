@@ -197,4 +197,15 @@ public class BoardLogic {
         }
     }
 
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (Square[] row : getRawGrid()) {
+            for (Square col : row) {
+                output.append(col.isMine ? "X" : col.mineNeighbours);
+            }
+            output.append("\n");
+        }
+        return output.toString();
+    }
+
 }
