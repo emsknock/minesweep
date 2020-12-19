@@ -10,6 +10,7 @@ A minesweeper game written for the University of Helsinki Software Development M
 * [Timekeeping](documentation/hours-worked.md)
 * [Architecture](documentation/architecture.md)
 * [User manual](documentation/user-manual.md)
+* [Testing](documentation/testing.md)
 
 ## Command line
 Run the program:
