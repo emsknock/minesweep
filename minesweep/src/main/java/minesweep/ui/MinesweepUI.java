@@ -123,7 +123,6 @@ public class MinesweepUI extends Application {
             try {
                 BoardLogic imported = ImportExport.importGame(selectedFile);
                 MinesweepUI.board = imported;
-                System.out.println("Loading");
                 update(primaryStage);
             } catch (IOException ex) {
                 Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't load game file: " + ex.getMessage(), ButtonType.OK);
