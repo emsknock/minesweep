@@ -128,11 +128,10 @@ public class MinesweepUI extends Application {
             } catch (IOException ex) {
                 Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't load game file: " + ex.getMessage(), ButtonType.OK);
                 errorAlert.showAndWait();
+            } catch (Exception ex) {
+                Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't parse or run loaded game file. Are you sure you selected a valid minesweep save game file? " + ex.getMessage(), ButtonType.OK);
+                errorAlert.showAndWait();
             }
-            // } catch (Exception ex) {
-            //     Alert errorAlert = new Alert(AlertType.ERROR, "Couldn't run loaded game: " + ex.getMessage(), ButtonType.OK);
-            //     errorAlert.showAndWait();
-            // }
         });
 
         mainPane.getChildren().addAll(menuBar, gameArea, status, newGameArea);
