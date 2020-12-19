@@ -30,6 +30,10 @@ Run checkstyle:
 ```bash
 $ mvn jxr:jxr checkstyle:checkstyle
 ```
+Create JavaDoc:
+```bash
+$ mvn javadoc:javadoc
+```
 Create jar:
 ```bash
 $ mvn package
