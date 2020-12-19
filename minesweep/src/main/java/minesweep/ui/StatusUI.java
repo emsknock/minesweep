@@ -18,7 +18,7 @@ public class StatusUI extends HBox {
         getChildren().clear();
 
         Label guessNumber = new Label("Guess number: " + b.getGuessCount());
-        Label flagNumber = new Label("Flagged squares: " + b.getFlagCount());
+        Label flagNumber = new Label("Flagged squares: " + b.getFlagCount() + "/" + b.getMineCount());
 
         getChildren().addAll(guessNumber, flagNumber);
 
