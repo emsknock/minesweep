@@ -5,5 +5,8 @@
     "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+    <suppress files="minesweep.ui.LoseWinUI.java" checks="[a-zA-Z0-9]*"/>
     <suppress files="minesweep.ui.MinesweepUI.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="minesweep.ui.SquareUI.java" checks="[a-zA-Z0-9]*"/>
+    <suppress files="minesweep.ui.StatusUI.java" checks="[a-zA-Z0-9]*"/>
 </suppressions>
