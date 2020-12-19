@@ -12,6 +12,11 @@ import minesweep.game.Square;
 
 public class ImportExport {
 
+    /**
+     * Creates a byte-array representation of a given game
+     * @param board
+     * @return Serialised game as a byte array
+     */
     public static byte[] serialiseGame(BoardLogic board) {
         Square[][] grid = board.getRawGrid();
         ArrayList<Byte> data = new ArrayList<Byte>();
@@ -34,6 +39,11 @@ public class ImportExport {
         return ArrayUtils.toPrimitive(data.toArray(new Byte[data.size()]));
     }
 
+    /**
+     * Creates a BoardLogic instance from the given serialised byte array
+     * @param readData
+     * @return The loaded game
+     */
     public static BoardLogic deserialiseGame(byte[] readData) {
 
         byte[] gridData = ArrayUtils.subarray(readData, 0, readData.length - 1);
@@ -80,10 +90,22 @@ public class ImportExport {
 
     }
 
+    /**
+     * Creates a save game file based on the passed game object
+     * @param board
+     * @param file
+     * @throws IOException
+     */
     public static void exportGame(BoardLogic board, File file) throws IOException {
         FileUtils.writeByteArrayToFile(file, serialiseGame(board));
     }
     
+    /**
+     * Creates a new BoardLogic instance from the loaded save game file
+     * @param file
+     * @return The loaded game
+     * @throws IOException
+     */
     public static BoardLogic importGame(File file) throws IOException {
         return deserialiseGame(FileUtils.readFileToByteArray(file));
     }
