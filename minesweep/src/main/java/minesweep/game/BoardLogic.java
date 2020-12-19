@@ -2,6 +2,10 @@ package minesweep.game;
 
 import java.util.Random;
 
+/**
+ * The BoardLogic class handles the game logic, e.g. guessing Squares,
+ * placing mines, and win/lose conditions
+ */
 public class BoardLogic {
 
     private Board board;

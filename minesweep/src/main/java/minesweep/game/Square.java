@@ -1,5 +1,9 @@
 package minesweep.game;
 
+/**
+ * The Square class keeps track of the variables of a single square on the grid
+ * and exposes de/serialisation methods for the save game functionality
+ */
 public class Square {
 
     public boolean isRevealed = false;

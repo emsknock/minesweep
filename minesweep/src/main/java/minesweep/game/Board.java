@@ -3,9 +3,8 @@ package minesweep.game;
 import java.util.*;
 
 /**
- * The Board class keeps track of a nxm grid of Squares, generates a valid
- * minesweeper game from a random seed, and handles the logic of revealing a
- * square on the game grid.
+ * The Board class keeps track of a nxm grid of Squares, and reveals
+ * some helper methods to find and set Squares on that grid.
  */
 public class Board {
 
