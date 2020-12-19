@@ -210,7 +210,7 @@ public class BoardLogic {
         return board.hasHitMine;
     }
 
-    public void placeMines(int avoidY, int avoidX) {
+    private void placeMines(int avoidY, int avoidX) {
         int numMinesPlaced = 0;
         while(numMinesPlaced != mineCount) {
 
