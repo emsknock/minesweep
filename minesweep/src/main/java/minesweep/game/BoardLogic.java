@@ -87,13 +87,15 @@ public class BoardLogic {
             // Clicking flagged squares should be ignored
             guessedSquare.isFlagged ||
             // Clicking revealed "0" squares should be ignored
-            (guessedSquare.isRevealed && guessedSquare.mineNeighbours == 0) ||
+                // Checkstyle wants this stupid indentation
+                (guessedSquare.isRevealed && guessedSquare.mineNeighbours == 0) ||
             // Clicking revealed squares over zero should only be ignored
             // when their neighbours are all revealed or already flagged,
             // i.e. there's nothing to reveal anymore
-            guessedSquare.isRevealed && board.getNeighbours(guessedSquare)
-                .stream()
-                .allMatch(neighbour -> neighbour.isRevealed || neighbour.isFlagged)
+                // Checkstyle doing this again — wtf??
+                guessedSquare.isRevealed && board.getNeighbours(guessedSquare)
+                    .stream()
+                    .allMatch(neighbour -> neighbour.isRevealed || neighbour.isFlagged)
         ) {
             return false;
         }
@@ -212,7 +214,7 @@ public class BoardLogic {
 
     private void placeMines(int avoidY, int avoidX) {
         int numMinesPlaced = 0;
-        while(numMinesPlaced != mineCount) {
+        while (numMinesPlaced != mineCount) {
 
             int y = rng.nextInt(board.height);
             int x = rng.nextInt(board.width);
@@ -222,7 +224,7 @@ public class BoardLogic {
                 // Cannot place on top of existing one:
                 !potentialMine.isMine &&
                 // Cannot place in the first clicked square:
-                y != avoidY && x != avoidX &&
+                    y != avoidY && x != avoidX && // Checkstyle wants this indentation for some godforsaken reason
                 // Cannot place to any of the first clicked square's neighbours:
                 board.getNeighbours(potentialMine)
                     .stream()

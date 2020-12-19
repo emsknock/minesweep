@@ -27,7 +27,7 @@ public class Square {
             (isFlagged ? 1 : 0) << 5 |
             (isMine ? 1 : 0) << 4 |
             mineNeighbours
-        );
+            ); // Checkstyle wants this indentation, I don't like it
     }
 
     /**
@@ -63,7 +63,7 @@ public class Square {
             c.mineNeighbours == mineNeighbours &&
             c.y == y &&
             c.x == x
-        );
+            ); // Checkstyle wants this indentation, I don't like it
     }
 
 }
