@@ -12,4 +12,5 @@
 | 14.12. | 6     | Refactoring code and added the Import/Export functionality         |
 | 17.12. | 3     | Refactored some more and wrote tests to match refactored code      |
 | 18.12. | 1     | Added tests for Import/Export                                      |
-| Total  | 26    |                                                                    |
+| 18.12. | 3     | Wrote documentation                                                |
+| Total  | 29    |                                                                    |
