@@ -15,6 +15,12 @@ public class Square {
         this.x = x;
     }
 
+    /**
+     * Returns a serialised byte-representation of this Square that
+     * can be deserialised back to an equal instance with the deserialise
+     * method. @see Square#deserialise(byte, int, int)
+     * @return A byte representation of this Square
+     */
     public byte serialise() {
         return (byte) (
             (isRevealed ? 1 : 0) << 6 |
@@ -24,6 +30,14 @@ public class Square {
         );
     }
 
+    /**
+     * Creates a Square instance based on a serialised byte-representation
+     * of a Square. @see Square#deserialise()
+     * @param serialised The serialised Square data
+     * @param y The Square's original Y coordinate in the grid
+     * @param x The Square's original X coordinate in the grid
+     * @return The deserialised Square instance
+     */
     public static Square deserialise(byte serialised, int y, int x) {
         Square out = new Square(y, x);
         out.isMine = ((serialised >> 4) & 1) == 1;
