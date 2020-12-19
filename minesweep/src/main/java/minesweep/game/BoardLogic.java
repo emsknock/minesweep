@@ -56,6 +56,24 @@ public class BoardLogic {
         }
     }
 
+    /**
+     * Submits a guess at the given coordinates and places mines if needed.
+     * 
+     * When guessing an unrevealed "0" square, recursively reveals all the
+     * possible empty space as per minesweeper rules.
+     * 
+     * When guessing a revealed non-"0" square, reveals all its neighbours
+     * (and in case any of them are "0"'s, recursively all the empty space as
+     * above) iff the square has exactly the amount of flagged neighbours that
+     * corresponds to its value.
+     * 
+     * Since the first guess is guaranteed not to be a mine, the mines aren't
+     * placed before the first time this method is called.
+     * 
+     * @param y
+     * @param x
+     * @return True if the guess hit a mine and false otherwise
+     */
     public boolean guess(int y, int x) {
 
         Square guessedSquare = board.getSquare(y, x);
@@ -85,6 +103,12 @@ public class BoardLogic {
 
     }
 
+    /**
+     * Exactly the same as the coordinate based guess method, but extracts the
+     * coordinates from a square. @see BoardLogic#guess(int, int)
+     * @param guessedSquare
+     * @return True if the guess hit a mine and false otherwise
+     */
     public boolean guess(Square guessedSquare) {
         return guess(guessedSquare.y, guessedSquare.x);
     }
@@ -104,6 +128,13 @@ public class BoardLogic {
         return s.isFlagged;
     }
 
+    /**
+     * Exactly the same as the reference based toggleField method, but finds
+     * the Square object based on coordinates. @see BoardLogic#toggleField(Square)
+     * @param y
+     * @param x
+     * @return The new state of flagging or false if the square is revealed already
+     */
     public boolean toggleFlag(int y, int x) {
         return toggleFlag(board.getSquare(y, x));
     }
@@ -148,6 +179,12 @@ public class BoardLogic {
         return board.grid.length;
     }
 
+    /**
+     * Checks if the game is won, i.e. exactly all mine squares are flagged and
+     * exactly all safe squares are unflagged. Doesn't tell wether the game is lost:
+     * @see BoardLogic#isGameLost()
+     * @return True if the game has been won
+     */
     public boolean isGameWon() {
         if (getGuessCount() < 1 || getFlagCount() != getMineCount()) {
             return false;
@@ -163,6 +200,12 @@ public class BoardLogic {
         return true;
     }
 
+    /**
+     * Checks if the game is lost, i.e. any mine is uncovered. Doesn't tell wether the
+     * game is won:
+     * @see BoardLogic#isGameWon()
+     * @return
+     */
     public boolean isGameLost() {
         return board.hasHitMine;
     }
